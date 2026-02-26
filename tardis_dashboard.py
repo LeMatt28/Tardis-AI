@@ -16,10 +16,10 @@ def load_data():
     df["Gare de départ"] = df["Gare de départ"].astype(str).str.upper()
     df["Gare d'arrivée"] = df["Gare d'arrivée"].astype(str).str.upper()
     
-    # On force les colonnes à être de vrais nombres pour éviter l'erreur de calcul
+    # On force les colonnes à etre de vrais nombre pour éviter l'erreur de calcul
     cols_num = [
         "Retard moyen des trains en retard au départ", 
-        "Nombre de circulations prévues", 
+        "Nombre de circulations prévue", 
         "Nombre de trains annulés"
     ]
     for col in cols_num:
@@ -36,7 +36,7 @@ def load_model():
 df = load_data()
 model = load_model()
 
-# --- FILTRE INTERACTIF ---
+# filtre
 st.sidebar.header("🔍 Filtres d'analyse")
 
 # On récupère les services et on cache le faux service "0.0"
@@ -52,7 +52,7 @@ if choix_service != "Tous":
 else:
     df_filtre = df
 
-# --- STATS GLOBALES ---
+# stats en general
 st.header("📊 Statistiques Globales")
 col1, col2, col3 = st.columns(3)
 
@@ -61,13 +61,13 @@ total_trajets = df_filtre["Nombre de circulations prévues"].sum()
 total_annules = df_filtre["Nombre de trains annulés"].sum()
 
 col1.metric("Retard Moyen (minutes)", round(retard_moyen, 2))
-# On s'assure que ça s'affiche en entier (int)
+# On affiche bien en int
 col2.metric("Total Trajets Prévus", int(total_trajets) if pd.notna(total_trajets) else 0)
 col3.metric("Total Trains Annulés", int(total_annules) if pd.notna(total_annules) else 0)
 
 st.divider()
 
-# --- VISUALISATION ---
+# rendu
 st.header("📈 Visualisation des Retards")
 st.write("Top 10 des gares de départ avec le plus de retard moyen.")
 
@@ -82,7 +82,7 @@ st.pyplot(fig)
 
 st.divider()
 
-# --- PREDICTION ---
+# modele qui prédit
 st.header("🔮 Prédire un Retard")
 
 with st.form("form_prediction"):
@@ -119,7 +119,7 @@ if bouton:
     
     ligne_utilisateur = df_dummies.tail(1)
     
-    # ASTUCE DE PRO : on force les colonnes à correspondre exactement à ce que l'IA a appris
+    # on force les colonnes à correspondre exactement à ce que le modele a appris
     ligne_utilisateur = ligne_utilisateur.reindex(columns=model.feature_names_in_, fill_value=0)
     
     # On lance la prediction
