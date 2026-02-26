@@ -5,7 +5,7 @@ import joblib
 
 # Config de la page
 st.set_page_config(page_title="Dashboard TARDIS", layout="wide")
-st.title("🚆 TARDIS : Prédiction des Retards SNCF")
+st.title("TARDIS : Prédiction des Retards SNCF")
 
 # Chargement des donnees et du modele
 @st.cache_data
@@ -36,8 +36,8 @@ def load_model():
 df = load_data()
 model = load_model()
 
-# --- FILTRE INTERACTIF ---
-st.sidebar.header("🔍 Filtres d'analyse")
+
+st.sidebar.header("Filtres d'analyse")
 
 # On récupère les services et on cache le faux service "0.0"
 liste_services = df["Service"].dropna().unique().tolist()
@@ -52,8 +52,7 @@ if choix_service != "Tous":
 else:
     df_filtre = df
 
-# --- STATS GLOBALES ---
-st.header("📊 Statistiques Globales")
+st.header("Statistiques Globales")
 col1, col2, col3 = st.columns(3)
 
 retard_moyen = df_filtre["Retard moyen des trains en retard au départ"].mean()
@@ -67,8 +66,7 @@ col3.metric("Total Trains Annulés", int(total_annules) if pd.notna(total_annule
 
 st.divider()
 
-# --- VISUALISATION ---
-st.header("📈 Visualisation des Retards")
+st.header("Visualisation des Retards")
 st.write("Top 10 des gares de départ avec le plus de retard moyen.")
 
 top_gares = df_filtre.groupby("Gare de départ")["Retard moyen des trains en retard au départ"].mean().sort_values(ascending=False).head(10)
@@ -82,8 +80,7 @@ st.pyplot(fig)
 
 st.divider()
 
-# --- PREDICTION ---
-st.header("🔮 Prédire un Retard")
+st.header("Prédire un Retard")
 
 with st.form("form_prediction"):
     c1, c2 = st.columns(2)
