@@ -16,10 +16,10 @@ def load_data():
     df["Gare de départ"] = df["Gare de départ"].astype(str).str.upper()
     df["Gare d'arrivée"] = df["Gare d'arrivée"].astype(str).str.upper()
     
-    # On force les colonnes à etre de vrais nombre pour éviter l'erreur de calcul
+    # On force les colonnes à être de vrais nombres pour éviter l'erreur de calcul
     cols_num = [
         "Retard moyen des trains en retard au départ", 
-        "Nombre de circulations prévue", 
+        "Nombre de circulations prévues", 
         "Nombre de trains annulés"
     ]
     for col in cols_num:
