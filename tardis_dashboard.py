@@ -19,7 +19,7 @@ def load_data():
     # On force les colonnes à etre de vrais nombre pour éviter l'erreur de calcul
     cols_num = [
         "Retard moyen des trains en retard au départ", 
-        "Nombre de circulations prévue", 
+        "Nombre de circulations prévues", 
         "Nombre de trains annulés"
     ]
     for col in cols_num:
